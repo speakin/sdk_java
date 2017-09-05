@@ -10,22 +10,20 @@ public class SessionApi extends BaseApi {
         super(sessionId, RequestWarp.ID_TYPE.SESSION_ID, sessionSecret, baseUrl);
     }
 
-    public SessionApiObj.StartRecordResponse startRecord(SessionApiObj.StartRecordRequest reqData) throws ApiError, Exception {
-        return startRecord(reqData, "");
+    public RecordStream openUploadRecordStream(SessionApiObj.StartRecordRequest reqData) throws ApiError, Exception{
+        return openUploadRecordStream(reqData,"");
     }
 
-    public SessionApiObj.StartRecordResponse startRecord(SessionApiObj.StartRecordRequest reqData, String traceId) throws ApiError, Exception {
+    public RecordStream openUploadRecordStream(SessionApiObj.StartRecordRequest reqData,String traceId) throws ApiError, Exception{
+        SessionApiObj.StartRecordResponse resp = startRecord(reqData,traceId);
+        return new RecordStream(this, resp.recordId, traceId);
+    }
+
+    SessionApiObj.StartRecordResponse startRecord(SessionApiObj.StartRecordRequest reqData, String traceId) throws ApiError, Exception {
         String url = String.format("%s/v1/session/record/start?traceId=%s", this.baseUrl, traceId);
         return this.callApi(url, reqData, SessionApiObj.StartRecordResponse.class);
     }
 
-    public RecordStream openUploadRecordStream(String recordId) {
-        return new RecordStream(this, recordId, "");
-    }
-
-    public RecordStream openUploadRecordStream(String recordId, String traceId) {
-        return new RecordStream(this, recordId, traceId);
-    }
 
     SessionApiObj.UploadRecordPartResponse uploadRecordPart(SessionApiObj.UploadRecordPartRequest reqData, String traceId) throws ApiError, Exception {
         String url = String.format("%s/v1/session/record/upload_part?traceId=%s", this.baseUrl, traceId);

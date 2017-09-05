@@ -37,4 +37,8 @@ public class RecordStream {
         reqData.recordId = this.recordId;
         this.api.uploadRecordCancel(reqData,traceId);
     }
+
+    public String getRecordId() {
+        return this.recordId;
+    }
 }
