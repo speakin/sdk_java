@@ -56,8 +56,7 @@ public class SessionApiTest {
         startReq.voiceRate = 16000;
         startReq.voiceLang = "common-short";
         startReq.dataFormat = DATA_FORMAT.WAV.name();
-        SessionApiObj.StartRecordResponse recordInfo = sessionApi.startRecord(startReq);
-        RecordStream rs = sessionApi.openUploadRecordStream(recordInfo.recordId);
+        RecordStream rs = sessionApi.openUploadRecordStream(startReq);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream("SI_device1_409_HM_digital_01.wav");
         while (true) {
             byte[] bs = new byte[40960];
@@ -74,6 +73,6 @@ public class SessionApiTest {
         }
         ins.close();
         rs.done();
-        return recordInfo.recordId;
+        return rs.getRecordId();
     }
 }
