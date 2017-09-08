@@ -97,18 +97,15 @@ public class SessionApiObj {
 
         @BsonProperty("threshold_score")
         public double thresholdScore;
+
+        @BsonProperty("dyanmic_cmp_score")
+        public double dynamicCmpScore;
     }
 
 
     public static class IdentityRequest {
         @BsonProperty("record_id")
         public String recordId;
-
-        @BsonProperty("filter_user")
-        public boolean filterUser;
-
-        @BsonProperty("filter_user_id_list")
-        public String[] filterUserIdList = new String[]{};
     }
 
 

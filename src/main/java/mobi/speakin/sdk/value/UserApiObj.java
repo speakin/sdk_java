@@ -162,6 +162,5 @@ public class UserApiObj {
     public static class ContainChildAppUserResponse {
         @BsonProperty("contain")
         public boolean contain;
-
     }
 }
