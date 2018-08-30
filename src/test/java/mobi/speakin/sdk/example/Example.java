@@ -1,25 +1,3 @@
-
-### 安装
-
-    git clone https://github.com/speakin/sdk_java
-    mvn install
-
-### 使用
-[embedmd]:# (src/test/java/mobi/speakin/sdk/example/Example.java java /        \/\/ 加载api客户端/ /\)\;/)
-```java
-        // 加载api客户端 替换你的key
-        SecApiClient apiClient = new SecApiClient(
-                "your app access key",   // app access key
-                "your app secret key",   // app secret key
-                "your bucket access key",// bucket access key
-                "your bucket secret key" // bucket secret key
-        );
-```
-
-### 完整例子
-
-[embedmd]:# (src/test/java/mobi/speakin/sdk/example/Example.java java /package/ $)
-```java
 package mobi.speakin.sdk.example;
 
 import mobi.speakin.sdk.voiceprint_cloud.SecApiClient;
@@ -61,7 +39,7 @@ public class Example {
         String appName = "app-test";
         String bucketName = "bucket-test";
 
-        
+
         // 上传所有注册音频文件，并把文件key储起来
         String[][] usersFiles = {
                 {
@@ -159,5 +137,3 @@ public class Example {
 
     }
 }
-```
-

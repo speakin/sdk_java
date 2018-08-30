@@ -1,0 +1,641 @@
+
+openapi: 3.0.0
+servers:
+  
+  - description: dev
+    url: https://vpc.speakin.mobi
+  
+info:
+  description: api document
+  version: /cloudapi/v1beta
+  title: 声纹云api
+  contact:
+    email: xiachengjia@speakin.mobi
+  license:
+    name: Mit
+    url: 'https://opensource.org/licenses/MIT'
+
+tags:
+  - name: voiceprint
+  
+  - name: storage
+  
+
+paths:
+  '/cloudapi/v1beta/voiceprint/query':
+    post:
+      operationId: query
+      tags:
+        - voiceprint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoiceprintQueryRequest'
+      responses:
+        '200':
+          description: '响应参数'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RespVoiceprintQueryResponse'
+  
+  '/cloudapi/v1beta/voiceprint/register':
+    post:
+      operationId: register
+      tags:
+        - voiceprint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoiceprintRegisterRequest'
+      responses:
+        '200':
+          description: '响应参数'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RespVoiceprintRegisterResponse'
+  
+  '/cloudapi/v1beta/voiceprint/verify':
+    post:
+      operationId: verify
+      tags:
+        - voiceprint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoiceprintVerifyRequest'
+      responses:
+        '200':
+          description: '响应参数'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RespVoiceprintVerifyResponse'
+  
+  '/cloudapi/v1beta/voiceprint/verify1ton':
+    post:
+      operationId: verify1ton
+      tags:
+        - voiceprint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Voiceprint1tonVerifyRequest'
+      responses:
+        '200':
+          description: '响应参数'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RespVoiceprint1tonVerifyResponse'
+  
+  '/cloudapi/v1beta/voiceprint/verifytopn':
+    post:
+      operationId: verifytopn
+      tags:
+        - voiceprint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoiceprinttopnVerifyRequest'
+      responses:
+        '200':
+          description: '响应参数'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RespVoiceprinttopnVerifyResponse'
+  
+  '/cloudapi/v1beta/voiceprint/delete':
+    post:
+      operationId: delete
+      tags:
+        - voiceprint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoiceprintDeleteRequest'
+      responses:
+        '200':
+          description: '响应参数'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RespVoiceprintDeleteResponse'
+  
+  '/cloudapi/v1beta/voiceprint/threshold':
+    post:
+      operationId: threshold
+      tags:
+        - voiceprint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoiceprintThresholdRequest'
+      responses:
+        '200':
+          description: '响应参数'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RespVoiceprintThresholdResponse'
+  
+  
+  '/cloudapi/v1beta/storage/upload':
+    post:
+      operationId: upload
+      tags:
+        - storage
+      parameters:
+        - name: bucket
+          in: query
+          required: true
+          schema:
+            type: string
+            example: ""
+      
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "wav"
+      
+        - name: durationMS
+          in: query
+          required: true
+          schema:
+            type: integer
+            example: 0
+            format: int64
+      
+        - name: timestamp
+          in: query
+          required: true
+          schema:
+            type: integer
+            example: 123
+            format: int64
+      
+      responses:
+        '200':
+          description: '响应参数'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CallUploadResponse'
+      requestBody:
+        description: '上传文件'
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+  
+  
+  '/cloudapi/v1beta/storage/download':
+    get:
+      operationId: download
+      tags:
+        - storage
+      parameters:
+        - name: bucket
+          in: query
+          required: true
+          schema:
+            type: string
+            example: ""
+        
+        - name: key
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "123"
+        
+      responses:
+        '200':
+          description: '二进制文件'
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+                
+  
+  
+components:
+  schemas:
+    CallUploadResponse:
+      type: object
+      properties:
+        hasError:
+          type: boolean
+          example: false
+        errorId:
+          type: string
+          example: ""
+        errorDesc:
+          type: string
+          example: ""
+        data:
+          $ref: '#/components/schemas/UploadResponse'
+      xml: 
+        name: CallUploadResponse
+    
+    RespVoiceprint1tonVerifyResponse:
+      type: object
+      properties:
+        hasError:
+          type: boolean
+          example: false
+        errorId:
+          type: string
+          example: ""
+        errorDesc:
+          type: string
+          example: ""
+        data:
+          $ref: '#/components/schemas/Voiceprint1tonVerifyResponse'
+      xml: 
+        name: RespVoiceprint1tonVerifyResponse
+    
+    RespVoiceprintDeleteResponse:
+      type: object
+      properties:
+        hasError:
+          type: boolean
+          example: false
+        errorId:
+          type: string
+          example: ""
+        errorDesc:
+          type: string
+          example: ""
+        data:
+          $ref: '#/components/schemas/VoiceprintDeleteResponse'
+      xml: 
+        name: RespVoiceprintDeleteResponse
+    
+    RespVoiceprintQueryResponse:
+      type: object
+      properties:
+        hasError:
+          type: boolean
+          example: false
+        errorId:
+          type: string
+          example: ""
+        errorDesc:
+          type: string
+          example: ""
+        data:
+          $ref: '#/components/schemas/VoiceprintQueryResponse'
+      xml: 
+        name: RespVoiceprintQueryResponse
+    
+    RespVoiceprintRegisterResponse:
+      type: object
+      properties:
+        hasError:
+          type: boolean
+          example: false
+        errorId:
+          type: string
+          example: ""
+        errorDesc:
+          type: string
+          example: ""
+        data:
+          $ref: '#/components/schemas/VoiceprintRegisterResponse'
+      xml: 
+        name: RespVoiceprintRegisterResponse
+    
+    RespVoiceprintThresholdResponse:
+      type: object
+      properties:
+        hasError:
+          type: boolean
+          example: false
+        errorId:
+          type: string
+          example: ""
+        errorDesc:
+          type: string
+          example: ""
+        data:
+          $ref: '#/components/schemas/VoiceprintThresholdResponse'
+      xml: 
+        name: RespVoiceprintThresholdResponse
+    
+    RespVoiceprintVerifyResponse:
+      type: object
+      properties:
+        hasError:
+          type: boolean
+          example: false
+        errorId:
+          type: string
+          example: ""
+        errorDesc:
+          type: string
+          example: ""
+        data:
+          $ref: '#/components/schemas/VoiceprintVerifyResponse'
+      xml: 
+        name: RespVoiceprintVerifyResponse
+    
+    RespVoiceprinttopnVerifyResponse:
+      type: object
+      properties:
+        hasError:
+          type: boolean
+          example: false
+        errorId:
+          type: string
+          example: ""
+        errorDesc:
+          type: string
+          example: ""
+        data:
+          $ref: '#/components/schemas/VoiceprinttopnVerifyResponse'
+      xml: 
+        name: RespVoiceprinttopnVerifyResponse
+    
+    UnionIDScore:
+      type: object
+      properties:
+        unionID:
+          type: string
+          example: "123"
+        score:
+          type: number
+          example: 0.5
+          format: double
+      xml: 
+        name: UnionIDScore
+    
+    UploadResponse:
+      type: object
+      properties:
+        key:
+          type: string
+          example: "123"
+      xml: 
+        name: UploadResponse
+    
+    Voiceprint1tonVerifyRequest:
+      type: object
+      required:
+        - appName
+        - unionIDs
+        - url
+        - samplingRate
+        - timestamp
+      
+      properties:
+        appName:
+          type: string
+          example: "welab"
+        unionIDs:
+          type: array
+          example: ["union_id2","union_id2"]
+          items: 
+            type: string
+            example: "union_id2"
+        url:
+          type: string
+          example: "123456"
+        samplingRate:
+          type: string
+          example: ""
+        timestamp:
+          type: integer
+          example: 12345
+          format: int64
+      xml: 
+        name: Voiceprint1tonVerifyRequest
+    
+    Voiceprint1tonVerifyResponse:
+      type: object
+      properties:
+        unionID:
+          type: string
+          example: "123"
+        score:
+          type: number
+          example: 0.5
+          format: double
+      xml: 
+        name: Voiceprint1tonVerifyResponse
+    
+    VoiceprintDeleteRequest:
+      type: object
+      required:
+        - appName
+        - unionID
+        - timestamp
+      
+      properties:
+        appName:
+          type: string
+          example: ""
+        unionID:
+          type: string
+          example: ""
+        timestamp:
+          type: integer
+          example: 123456
+          format: int64
+      xml: 
+        name: VoiceprintDeleteRequest
+    
+    VoiceprintDeleteResponse:
+      
+      xml: 
+        name: VoiceprintDeleteResponse
+    
+    VoiceprintQueryRequest:
+      type: object
+      required:
+        - appName
+        - unionID
+        - timestamp
+      
+      properties:
+        appName:
+          type: string
+          example: ""
+        unionID:
+          type: string
+          example: ""
+        timestamp:
+          type: integer
+          example: 123456
+          format: int64
+      xml: 
+        name: VoiceprintQueryRequest
+    
+    VoiceprintQueryResponse:
+      type: object
+      properties:
+        isRegister:
+          type: boolean
+          example: false
+      xml: 
+        name: VoiceprintQueryResponse
+    
+    VoiceprintRegisterRequest:
+      type: object
+      required:
+        - appName
+        - unionID
+        - samplingRate
+        - timestamp
+      
+      properties:
+        appName:
+          type: string
+          example: ""
+        replace:
+          type: boolean
+          example: false
+        unionID:
+          type: string
+          example: ""
+        urls:
+          type: array
+          example: ["123","45","666"]
+          items: 
+            type: string
+            example: "123"
+        samplingRate:
+          type: string
+          example: "8k"
+        timestamp:
+          type: integer
+          example: 123456
+          format: int64
+      xml: 
+        name: VoiceprintRegisterRequest
+    
+    VoiceprintRegisterResponse:
+      
+      xml: 
+        name: VoiceprintRegisterResponse
+    
+    VoiceprintThresholdRequest:
+      type: object
+      required:
+        - appName
+        - timestamp
+      
+      properties:
+        appName:
+          type: string
+          example: ""
+        timestamp:
+          type: integer
+          example: 123456
+          format: int64
+      xml: 
+        name: VoiceprintThresholdRequest
+    
+    VoiceprintThresholdResponse:
+      type: object
+      properties:
+        threshold:
+          type: number
+          example: 0.38
+          format: double
+      xml: 
+        name: VoiceprintThresholdResponse
+    
+    VoiceprintVerifyRequest:
+      type: object
+      required:
+        - appName
+        - unionID
+        - url
+        - samplingRate
+        - timestamp
+      
+      properties:
+        appName:
+          type: string
+          example: "welab"
+        unionID:
+          type: string
+          example: "use_one"
+        url:
+          type: string
+          example: "123456"
+        samplingRate:
+          type: string
+          example: ""
+        timestamp:
+          type: integer
+          example: 12345
+          format: int64
+      xml: 
+        name: VoiceprintVerifyRequest
+    
+    VoiceprintVerifyResponse:
+      type: object
+      properties:
+        score:
+          type: number
+          example: 0.5
+          format: double
+      xml: 
+        name: VoiceprintVerifyResponse
+    
+    VoiceprinttopnVerifyRequest:
+      type: object
+      required:
+        - appName
+        - url
+        - samplingRate
+        - topn
+        - timestamp
+      
+      properties:
+        appName:
+          type: string
+          example: "test"
+        url:
+          type: string
+          example: "123456"
+        samplingRate:
+          type: string
+          example: ""
+        topn:
+          type: integer
+          example: 10
+          format: int64
+        timestamp:
+          type: integer
+          example: 12345
+          format: int64
+      xml: 
+        name: VoiceprinttopnVerifyRequest
+    
+    VoiceprinttopnVerifyResponse:
+      type: object
+      properties:
+        scores:
+          type: array
+          example: [{"unionID":"123","score":0.5}]
+          items: 
+            $ref: '#/components/schemas/UnionIDScore'
+      xml: 
+        name: VoiceprinttopnVerifyResponse
+    
