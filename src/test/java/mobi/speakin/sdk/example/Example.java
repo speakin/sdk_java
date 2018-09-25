@@ -62,6 +62,24 @@ public class Example {
             usersFilesKey.add(keys);
         }
 
+        //vad check
+        for(ArrayList<String> keys: usersFilesKey) {
+            for(String key: keys){
+                VoiceprintVadcheckRequest req = new VoiceprintVadcheckRequest();
+                req.setAppName(appName);
+                req.setUrl(key);
+                req.setSamplingRate("16k");
+                req.setTimestamp(System.currentTimeMillis());
+                RespVoiceprintVadcheckResponse rsp = api.vadcheck(req);
+                if(rsp.getHasError()){
+                    throw new RuntimeException(rsp.getErrorId());
+                }
+                if (!rsp.getData().getCode().equals("CHECKVAD_OK")) {
+                    throw new RuntimeException("key " + key + " vad check failure reason "+ rsp.getData().getStatus());
+                }
+            }
+        }
+
         // 注册所有用户
         for(int i = 0;i < userNames.length;i++) {
             VoiceprintRegisterRequest registerReq = new VoiceprintRegisterRequest();
